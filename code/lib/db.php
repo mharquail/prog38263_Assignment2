@@ -87,6 +87,7 @@ function update_article($dbconn, $title, $content, $aid) {
 }
 
 function authenticate_user($dbconn, $username, $password) {
+	pg_query($dbconn, "DEALLOCATE ALL");
 	pg_prepare($dbconn, "check_login", "SELECT
 		authors.id as id,
 		authors.username as username,
