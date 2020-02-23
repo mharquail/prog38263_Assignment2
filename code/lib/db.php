@@ -53,8 +53,7 @@ function get_article($dbconn, $aid) {
 		articles
 		INNER JOIN
 		authors ON articles.author=authors.id
-		WHERE
-		aid='".$aid."'
+		WHERE aid='".$aid."'
 		LIMIT 1";
 return run_query($dbconn, $query);
 }
@@ -88,8 +87,8 @@ function update_article($dbconn, $title, $content, $aid) {
 }
 
 function authenticate_user($dbconn, $username, $password) {
-	$query=
-		"SELECT
+	pg_query($dbconn, "DEALLOCATE ALL");
+	pg_prepare($dbconn, "check_login", "SELECT
 		authors.id as id,
 		authors.username as username,
 		authors.password as password,
@@ -97,10 +96,11 @@ function authenticate_user($dbconn, $username, $password) {
 		FROM
 		authors
 		WHERE
-		username='".$_POST['username']."'
+		username=\$1
 		AND
-		password='".$_POST['password']."'
-		LIMIT 1";
-	return run_query($dbconn, $query);
+		password=\$2
+		LIMIT 1");
+	$sql = pg_execute($dbconn, "check_login", array($username, $password));
+	return $sql;
 }	
 ?>
