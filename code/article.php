@@ -28,17 +28,11 @@
       	</h3>
 
 	<div class="blog-post">
-	<h2 class="blog-post-title"><?php echo $row['title'] ?></h2>
+	<h2 class="blog-post-title"><?php echo htmlspecialchars($row['title']) ?></h2>
 	<p class="blog-post-meta">
 		<?php echo substr($row['date'], 0, 10)." by ".$row['author'] ?>
 	</p><p>
-	<?php if($row['content'] == strip_tags($row['content'])){
-		echo $row['content'];
-	}
-	else{
-		echo htmlspecialchars($row['content']);
-	}
-	 ?>
+	<?php echo htmlspecialchars($row['content']);?>
 	</p>
       </div><!-- /.blog-post -->
 	<?php include("templates/contentstop.php"); ?>
