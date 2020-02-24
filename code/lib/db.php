@@ -40,6 +40,36 @@ function get_article_list($dbconn){
 return run_query($dbconn, $query);
 }
 
+function get_article_list_restricted($dbconn, $author){
+	$query=
+		"SELECT
+		articles.created_on as date,
+		articles.aid as aid,
+		articles.title as title,
+		authors.username as author,
+		articles.stub as stub
+		FROM
+		articles
+		INNER JOIN
+		authors ON articles.author=authors.id
+		WHERE articles.author = ".$author."
+		ORDER BY
+		date DESC";
+return run_query($dbconn, $query);		
+}
+
+function verify_author($dbconn, $id){
+	$query = "SELECT authors.role FROM authors WHERE authors.id = " .$id;
+	$row = pg_fetch_array(run_query($dbconn, $query), 0);
+
+	if($row['role'] == 'admin'){
+		return get_article_list($dbconn);
+	}
+	elseif($row['role'] == 'user'){
+		return get_article_list_restricted($dbconn, $id);
+	}
+}
+
 function get_article($dbconn, $aid) {
 	$query= 
 		"SELECT 

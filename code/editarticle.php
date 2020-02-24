@@ -2,6 +2,14 @@
 <?php include("lib/auth.php") ?>
 <?php
 
+$query = "SELECT articles.author FROM articles WHERE aid='" .$_GET['aid']."'";
+$result = run_query($dbconn, $query);
+$row = pg_fetch_array($result, 0);
+
+if($_SESSION['id'] != $row['author']){
+	header("Location: /admin.php");
+}
+
 if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$aid = $_GET['aid'];	
 	$result=get_article($dbconn, $aid);
