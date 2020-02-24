@@ -9,6 +9,9 @@ if(!empty($_SESSION['token'])){
 		$result = delete_article($dbconn, $aid);
 		header("Location: /admin.php");
 	}
+	else{
+		header("Location: /admin.php");
+	}
 }
 else{
 	header("Location: /admin.php");
