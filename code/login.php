@@ -1,14 +1,29 @@
 <?php include("templates/page_header.php");?>
 <?php
+require __DIR__ . '/twilio/twilio-php/src/Twilio/autoload.php';
+
+use Twilio\Rest\Client;
+
+$sid = 'ACf08eb7445f5c0fb48082d49105535856';
+$token = '71327d177f61437fe229e9df6715c39b';
+$client = new Client($sid, $token);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$result = authenticate_user($dbconn, $_POST['username'], $_POST['password']);
 	if (pg_num_rows($result) == 1) {
+		$id = pg_fetch_array($result)['id'];
+		$otp = rand(100000, 999999);
+		$client->messages->create(
+			'+19054830213',
+			array(
+				'from' => '+16475600859',
+				'body' => "This is your OTP: ".$otp
+			)
+		);
 		$_SESSION['username'] = $_POST['username'];
-		$_SESSION['authenticated'] = True;
-		$_SESSION['id'] = pg_fetch_array($result)['id'];
-		//Redirect to admin area
-		header("Location: /admin.php");
+		$_SESSION['id'] = $id;
+		$_SESSION['otp'] = $otp;
+		header("Location: /verify.php");
 	}	
 }
 
