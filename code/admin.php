@@ -1,8 +1,6 @@
 <?php include("templates/page_header.php");
 
-if(empty($_SESSION['token'])){
-	$_SESSION['token'] = bin2hex(random_bytes(32));
-}
+$_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes($n = 16, $cstrong));
 
 $token = $_SESSION['token'];
 
