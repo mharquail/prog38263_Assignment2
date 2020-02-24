@@ -19,7 +19,14 @@
 <div class="blog-post">
 <h2 class="blog-post-title"><?php echo $row['title'] ?></h2>
 <p class="blog-post-meta"><?php echo substr($row['date'],0,10)." by ".$row['author'] ?></p>
-<p><?php echo $row['stub'] ?><br><a href='article.php?aid=<?php echo $row['aid'] ?>'>Read more...</a></p>
+<p><?php 
+if($row['stub'] == strip_tags($row['stub'])){
+	echo $row['stub']."...";
+}
+else{
+	echo htmlspecialchars($row['stub'])."...";
+} ?>
+<br><a href='article.php?aid=<?php echo $row['aid'] ?>'>Read more...</a></p>
 </div>
 
 	<?php } //close while loop ?>

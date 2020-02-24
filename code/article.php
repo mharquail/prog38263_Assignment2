@@ -32,7 +32,13 @@
 	<p class="blog-post-meta">
 		<?php echo substr($row['date'], 0, 10)." by ".$row['author'] ?>
 	</p><p>
-		<?php echo $row['content'] ?>
+	<?php if($row['content'] == strip_tags($row['content'])){
+		echo $row['content'];
+	}
+	else{
+		echo htmlspecialchars($row['content']);
+	}
+	 ?>
 	</p>
       </div><!-- /.blog-post -->
 	<?php include("templates/contentstop.php"); ?>
