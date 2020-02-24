@@ -1,5 +1,5 @@
 <?php include("templates/page_header.php");
-
+echo $_SESSION['otp'];
 $_SESSION['token'] = hash('sha256', bin2hex(openssl_random_pseudo_bytes($n = 16, $cstrong)));
 
 $token = $_SESSION['token'];
