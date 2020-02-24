@@ -1,4 +1,12 @@
-<?php include("templates/page_header.php");?>
+<?php include("templates/page_header.php");
+
+if(empty($_SESSION['token'])){
+	$_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
+$token = $_SESSION['token'];
+
+?>
 <?php include("lib/auth.php") ?>
 <!doctype html>
 <html lang="en">
@@ -29,9 +37,11 @@ New Post <span class="fa fa-plus" aria-hidden="true"></span>
   <td><?php echo $row['author'] ?></td>
   <td><?php echo substr($row['date'],0,10) ?></td>
   <td><a href="/editarticle.php?aid=<?php echo $row['aid'] ?>"><i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i></a></td>
-  <td><a href="/deletearticle.php?aid=<?php echo $row['aid'] ?>"><i class="fa fa-times fa-2x" aria-hidden="true"></i></a></td>
+  <td><a href="/deletearticle.php?aid=<?php echo $row['aid'] ?>&token=<?php echo $token;?>"><i class="fa fa-times fa-2x" aria-hidden="true"></i></a></td>
 </tr>
-	<?php } //close while loop ?>
+<?php } //close while loop
+?>
+<input type="hidden" name="token" value="<?php echo $token; ?>" />
 </table>
 	<?php include("templates/contentstop.php"); ?>
 	<?php include("templates/footer.php"); ?>
