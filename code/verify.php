@@ -1,11 +1,10 @@
 <?php include("templates/page_header.php");?>
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+	echo $_POST['id'];
 	if(isset($_POST['otp'])){
 		if($_SESSION['otp'] == $_POST['otp']){
-			$_SESSION['authenticated'] = TRUE;
-			$_SESSION['id'] = $_POST['id'];
-			$_SESSION['username'] = $_POST['username'];
+			$_SESSION['authenticated'] = True;
 			unset($_SESSION['otp']); 
 			header("Location: /admin.php");
 		}
