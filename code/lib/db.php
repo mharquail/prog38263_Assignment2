@@ -116,7 +116,7 @@ function update_article($dbconn, $title, $content, $aid) {
 	return run_query($dbconn, $query);
 }
 
-function authenticate_user($dbconn, $username, $password) {
+function authenticate_user($dbconn, $username) {
 	pg_query($dbconn, "DEALLOCATE ALL");
 	pg_prepare($dbconn, "check_login", "SELECT
 		authors.id as id,
@@ -127,10 +127,8 @@ function authenticate_user($dbconn, $username, $password) {
 		authors
 		WHERE
 		username=\$1
-		AND
-		password=\$2
 		LIMIT 1");
-	$sql = pg_execute($dbconn, "check_login", array($username, $password));
+	$sql = pg_execute($dbconn, "check_login", array($username));
 	return $sql;
 }	
 ?>

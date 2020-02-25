@@ -1,7 +1,6 @@
 <?php include("templates/page_header.php");?>
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-	echo $_POST['id'];
 	if(isset($_POST['otp'])){
 		if($_SESSION['otp'] == $_POST['otp']){
 			$_SESSION['authenticated'] = True;
@@ -9,6 +8,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			header("Location: /admin.php");
 		}
 	}
+	
 }
 ?>
 <!doctype html>
