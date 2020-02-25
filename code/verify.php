@@ -1,11 +1,6 @@
 <?php include("templates/page_header.php");?>
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-	//$_GET['username'] = $_POST['username'];
-	//$_GET['otpVerify'] = $_POST['otp'];
-	//$_GET['id'] = $_POST['id'];
-	//echo $_POST['otp'];
-	//echo $_SESSION['otp'];
 	if(isset($_POST['otp'])){
 		if($_SESSION['otp'] == $_POST['otp']){
 			$_SESSION['authenticated'] = TRUE;
