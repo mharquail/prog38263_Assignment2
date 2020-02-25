@@ -7,7 +7,7 @@ $query = "SELECT articles.author FROM articles WHERE aid='" .$_GET['aid']."'";
 $result = run_query($dbconn, $query);
 $row = pg_fetch_array($result, 0);
 
-if($_SESSION['id'] != $row['author']){
+if($_SESSION['id'] != $row['author'] || $_SESSION['id'] != 1){
 	header("Location: /admin.php");
 }
 
