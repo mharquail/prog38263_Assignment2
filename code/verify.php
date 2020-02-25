@@ -4,7 +4,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if(isset($_POST['otp'])){
 		if($_SESSION['otp'] == $_POST['otp']){
 			$_SESSION['authenticated'] = True;
-			unset($_SESSION['otp']); 
+			unset($_SESSION['otp']);
+
+			$fp = fopen("log/access.log", 'ab+');
+			fwrite($fp, $_SERVER['REMOTE_ADDR'] . ' - User ID#: ' . $_SESSION['id'] . ' - SUCCESS Login Permitted at: ' . gmdate("Y-m-d H:i:s") . " UTC\n");
+			fclose($fp);
+
 			header("Location: /admin.php");
 		}
 	}
